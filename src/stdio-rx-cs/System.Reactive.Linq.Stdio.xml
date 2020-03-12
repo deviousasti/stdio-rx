@@ -1,0 +1,245 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>System.Reactive.Linq.Stdio</name>
+    </assembly>
+    <members>
+        <member name="T:System.Reactive.Linq.ProcessTerminatedException">
+            <summary>
+            Thrown when the process has terminated unexpectedly
+            </summary>
+            <seealso cref="T:System.ApplicationException" />
+        </member>
+        <member name="P:System.Reactive.Linq.ProcessTerminatedException.ExitCode">
+            <summary>
+            The process exit code.
+            </summary>
+        </member>
+        <member name="P:System.Reactive.Linq.ProcessTerminatedException.ExitTime">
+            <summary>
+            The time the process exited
+            </summary>
+        </member>
+        <member name="M:System.Reactive.Linq.ProcessTerminatedException.#ctor(System.Int32,System.DateTime)">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Reactive.Linq.ProcessTerminatedException"/> class.
+            </summary>
+            <param name="code">The code.</param>
+            <param name="exitTime">The exit time.</param>
+        </member>
+        <member name="T:System.Reactive.Linq.ProcessExitMethod">
+            <summary>
+            Methods of ending the process 
+            </summary>
+        </member>
+        <member name="F:System.Reactive.Linq.ProcessExitMethod.InputClose">
+            <summary>
+            Close stdin stream
+            </summary>
+        </member>
+        <member name="F:System.Reactive.Linq.ProcessExitMethod.Close">
+            <summary>
+            Send close message
+            </summary>
+        </member>
+        <member name="F:System.Reactive.Linq.ProcessExitMethod.CloseMainWindow">
+            <summary>
+            If GUI application, close the main window
+            </summary>
+        </member>
+        <member name="F:System.Reactive.Linq.ProcessExitMethod.Kill">
+            <summary>
+            Kill the process
+            </summary>
+        </member>
+        <member name="F:System.Reactive.Linq.ProcessExitMethod.SendControlSignal">
+            <summary>
+            Send control signal 
+            </summary>
+        </member>
+        <member name="F:System.Reactive.Linq.ProcessExitMethod.SendQuitCommand">
+            <summary>
+            Send explicit quit command via stdin
+            </summary>
+        </member>
+        <member name="T:System.Reactive.Linq.StdioSettings">
+            <summary>
+            Settings for creating an stdio-bound Observable
+            </summary>
+        </member>
+        <member name="P:System.Reactive.Linq.StdioSettings.Input">
+            <summary>
+            Input to stdin
+            </summary>
+        </member>
+        <member name="P:System.Reactive.Linq.StdioSettings.WriteNewLines">
+            <summary>
+            Should every line end with a newline
+            </summary>
+            <value>
+              <c>true</c> if [write new lines]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:System.Reactive.Linq.StdioSettings.RedirectOutput">
+            <summary>
+            Should force redirect stdout - defaults to true
+            </summary>
+            <value>
+              <c>true</c> if [redirect output]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:System.Reactive.Linq.StdioSettings.RedirectError">
+            <summary>
+            Should force redirect stderr - defaults to true
+            </summary>
+            <value>
+              <c>true</c> if [redirect error]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:System.Reactive.Linq.StdioSettings.ExitMethod">
+            <summary>
+            Sets the exit method of the process.
+            </summary>
+        </member>
+        <member name="P:System.Reactive.Linq.StdioSettings.ExitTimeout">
+            <summary>
+            Gets or sets the process exit timeout.
+            </summary>
+            <value>
+            The exit timeout.
+            </value>
+        </member>
+        <member name="P:System.Reactive.Linq.StdioSettings.ControlSignal">
+            <summary>
+            Gets or sets the control signal to the process.
+            </summary>
+        </member>
+        <member name="P:System.Reactive.Linq.StdioSettings.KillOtherProcesses">
+            <summary>
+            Gets or sets a value indicating whether to kill other processes of the same name.
+            every time the observable is started
+            </summary>
+            <value>
+              <c>true</c> if [kill other processes]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:System.Reactive.Linq.StdioSettings.RootPath">
+            <summary>
+            Gets or sets a value indicating whether to use the root executable path
+            </summary>
+            <value>
+              <c>true</c> if [root path]; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:System.Reactive.Linq.StdioSettings.WorkingDirectory">
+            <summary>
+            Gets or sets the working directory of the called process.
+            </summary>
+            <value>
+            The working directory.
+            </value>
+        </member>
+        <member name="P:System.Reactive.Linq.StdioSettings.ExitCodes">
+            <summary>
+            Array of successful exit codes.
+            </summary>
+        </member>
+        <member name="P:System.Reactive.Linq.StdioSettings.ExitCode">
+            <summary>
+            Convenience property for setting a single exit code.
+            </summary>
+        </member>
+        <member name="P:System.Reactive.Linq.StdioSettings.QuitCommand">
+            <summary>
+            Gets or sets the quit command to be sent to stdin.
+            </summary>
+        </member>
+        <member name="M:System.Reactive.Linq.StdioSettings.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:System.Reactive.Linq.StdioSettings"/> class.
+            </summary>
+        </member>
+        <member name="F:System.Reactive.Linq.StdioSettings.Defaults">
+            <summary>
+            The default value of stdio settings
+            </summary>
+        </member>
+        <member name="T:System.Reactive.Linq.StdioObservable">
+            <summary>
+            StdioObservable contains methods to create an observable to a process' stdio
+            </summary>
+        </member>
+        <member name="M:System.Reactive.Linq.StdioObservable.Create(System.String,System.String,System.Reactive.Linq.StdioSettings)">
+            <summary>
+            Creates an observable with the specified process file and arguments - use default settings if none provided.
+            </summary>
+        </member>
+        <member name="M:System.Reactive.Linq.StdioObservable.Create(System.Diagnostics.ProcessStartInfo,System.Reactive.Linq.StdioSettings)">
+            <summary>
+            Creates an observable with the specified process start info - use default settings if none provided.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:System.Reactive.Linq.StdioObservable.KillOthers(System.String)">
+            <summary>
+            Kills other processes of the same filename.
+            </summary>
+        </member>
+        <member name="M:System.Reactive.Linq.StdioObservable.Create(System.Diagnostics.Process,System.Reactive.Linq.StdioSettings)">
+            <summary>
+            Creates an observable that listens to an existing process.
+            </summary>
+        </member>
+        <member name="M:System.Reactive.Linq.StdioObservable.Where(System.String)">
+            <summary>
+            The equivalent of the where/which command which finds the directory 
+            an executable is in from the system's PATH environment variable
+            </summary>
+        </member>
+        <member name="M:System.Reactive.Linq.StdioObservable.ThrowIf``1(System.IObservable{``0},System.Predicate{``0},System.TimeSpan)">
+            <summary>
+            Throws if the condition matches, with the specified delay for throwing the exception
+            </summary>
+        </member>
+        <member name="M:System.Reactive.Linq.StdioObservable.ThrowIfCount``1(System.IObservable{``0},System.Predicate{``0},System.Int32,System.TimeSpan)">
+            <summary>
+            Throws if the condition matches a number of times, with the specified delay for throwing the exception
+            </summary>
+        </member>
+        <member name="M:System.Reactive.Linq.StdioObservable.ThrowIfCount``1(System.IObservable{``0},System.Predicate{``0},System.Int32,System.TimeSpan,System.Func{System.Exception})">
+            <summary>
+            Throws the generated exception if the condition matches, with the specified delay for throwing the exception
+            </summary>
+        </member>
+        <member name="T:System.Reactive.Linq.StdioObservable.ConsoleControlSignal">
+            <summary>
+            Type of control signal to send to window
+            </summary>
+        </member>
+        <member name="F:System.Reactive.Linq.StdioObservable.ConsoleControlSignal.CTRL_C">
+            <summary>
+            Send ^C
+            </summary>
+        </member>
+        <member name="F:System.Reactive.Linq.StdioObservable.ConsoleControlSignal.CTRL_BREAK">
+            <summary>
+            Send ^BRK
+            </summary>
+        </member>
+        <member name="F:System.Reactive.Linq.StdioObservable.ConsoleControlSignal.CTRL_CLOSE">
+            <summary>
+            Application close
+            </summary>
+        </member>
+        <member name="F:System.Reactive.Linq.StdioObservable.ConsoleControlSignal.CTRL_LOGOFF">
+            <summary>
+            User log-off
+            </summary>
+        </member>
+        <member name="F:System.Reactive.Linq.StdioObservable.ConsoleControlSignal.CTRL_SHUTDOWN">
+            <summary>
+            Shutdown initiated
+            </summary>
+        </member>
+    </members>
+</doc>
