@@ -1,7 +1,7 @@
 # stdio-rx
 Standard Output, Error, and Input streams of a process as Observables
 
-**StdioObservable** lets you express an executable program as observables of its input and output. This allows you to compose programs using various operators and reactive semantics.
+**stdio-rx** lets you express running an executable as observables of its output and input. This allows you to compose processes using standard Rx operators and general reactive semantics.
 
 
 ## A quick example
@@ -26,9 +26,9 @@ static void Main(string[] args)
 
 ![stdio-demo](https://user-images.githubusercontent.com/2375486/76637326-89270600-6570-11ea-90fa-b1d2fd60798e.gif)
 
-- The process is started on subscription.
-- If the process exits with an unexpected return code, it raises an `OnError` notification, and tears down the stream, but the `Retry` operator restarts the stream, creating a new process.
-- `Console.WriteLine` is called with the process output 
+- The process is started only on subscription.
+- If the process exits with an unexpected return code, it raises an `OnError` notification, which tears down the stream - but the `Retry` operator restarts the stream, creating a new process.
+- Since `Console.WriteLine` is a subscribe callback,  is called every time the process writes to output 
 - As soon as the subscription is disposed, so is the process.
 
 ## Another example
@@ -57,7 +57,7 @@ There are two assemblies:
 **C#**
 
 ```csharp
-StdioObservable.Create ((ProcessStartInfo|filename,args) info, [StdioSettings setting])` 
+StdioObservable.Create ((ProcessStartInfo|filename,args) info, [StdioSettings setting]) 
 ```
 
 **F#**
@@ -97,5 +97,5 @@ See properties in `StdioSettings` for its descriptions.
 - Some applications can be exit by sending a keystroke (like 'q') or a command like 'quit'. 
 
   ​	C#: Set `ExitMethod = SendQuitCommand` and `ExitCommand = "q"`, and for 
-
+  
   ​	F#: Set `ExitMethod = SendQuitCommand("q")`
