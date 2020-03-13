@@ -24,7 +24,7 @@ static void Main(string[] args)
 }
 ```
 
-![stdio-demo](https://user-images.githubusercontent.com/2375486/76637326-89270600-6570-11ea-90fa-b1d2fd60798e.gif)
+![stdio-rx-demo](https://user-images.githubusercontent.com/2375486/76654654-7d980700-6591-11ea-8ebe-d9956fabd279.gif)
 
 - The process is started only on subscription.
 - If the process exits with an unexpected return code, it raises an `OnError` notification, which tears down the stream - but the `Retry` operator restarts the stream, creating a new process.
