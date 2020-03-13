@@ -7,7 +7,7 @@ using System.Reactive.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
-namespace System.Reactive.Linq
+namespace System.Reactive.Linq.Stdio
 {
     /// <summary>
     /// Thrown when the process has terminated unexpectedly
@@ -76,6 +76,37 @@ namespace System.Reactive.Linq
     }
 
     /// <summary>
+    /// Type of control signal to send to the process
+    /// </summary>
+    public enum ConsoleControlSignal
+    {
+        /// <summary>
+        /// Send ^C
+        /// </summary>
+        CTRL_C = 0,
+
+        /// <summary>
+        /// Send ^BRK
+        /// </summary>
+        CTRL_BREAK = 1,
+
+        /// <summary>
+        /// Application close
+        /// </summary>
+        CTRL_CLOSE = 2,
+
+        /// <summary>
+        /// User log-off
+        /// </summary>
+        CTRL_LOGOFF = 5,
+
+        /// <summary>
+        /// Shutdown initiated
+        /// </summary>
+        CTRL_SHUTDOWN = 6
+    }
+
+    /// <summary>
     /// Settings for creating an stdio-bound Observable
     /// </summary>
     public class StdioSettings
@@ -128,7 +159,7 @@ namespace System.Reactive.Linq
         /// <summary>
         /// Gets or sets the control signal to the process.
         /// </summary>
-        public StdioObservable.ConsoleControlSignal ControlSignal { get; set; }
+        public ConsoleControlSignal ControlSignal { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether to kill other processes of the same name.
@@ -178,7 +209,7 @@ namespace System.Reactive.Linq
             RedirectOutput = true;
             RedirectError = true;
             ExitTimeout = 3000;
-            ControlSignal = StdioObservable.ConsoleControlSignal.CTRL_C;
+            ControlSignal = ConsoleControlSignal.CTRL_C;
             ExitMethod = ProcessExitMethod.Kill;
             ExitCodes = new int[] { 0 };
         }
@@ -198,7 +229,7 @@ namespace System.Reactive.Linq
         /// <summary>
         /// Creates an observable with the specified process file and arguments - use default settings if none provided.
         /// </summary>
-        public static IObservable<string> Create(string filename, string arguments, StdioSettings settings = default)
+        public static IObservable<string> Create(string filename, string arguments = default, StdioSettings settings = default)
         {
             var args = new ProcessStartInfo(filename, arguments) { };
 
@@ -268,7 +299,7 @@ namespace System.Reactive.Linq
                                     process.CloseMainWindow();
                                     break;
                                 case ProcessExitMethod.Kill:
-                                    process.Kill();
+                                    process.Kill(true);
                                     break;
                                 case ProcessExitMethod.SendQuitCommand:
                                     process.StandardInput.Write(settings.QuitCommand);
@@ -373,7 +404,8 @@ namespace System.Reactive.Linq
             return Environment.GetEnvironmentVariable("PATH", EnvironmentVariableTarget.Machine)
                               .Split(';')
                               .Reverse()
-                              .FirstOrDefault(path => File.Exists(Path.Combine(path, file)));
+                              .Select(path => Path.Combine(path, file))
+                              .FirstOrDefault(File.Exists);
         }
 
         /// <summary>
@@ -425,38 +457,7 @@ namespace System.Reactive.Linq
 
         //import in the declaration for GenerateConsoleCtrlEvent
         [DllImport("kernel32.dll", SetLastError = true)]
-        static extern bool GenerateConsoleCtrlEvent(ConsoleControlSignal sigevent, int dwProcessGroupId);
-
-        /// <summary>
-        /// Type of control signal to send to window
-        /// </summary>
-        public enum ConsoleControlSignal
-        {
-            /// <summary>
-            /// Send ^C
-            /// </summary>
-            CTRL_C = 0,
-            
-            /// <summary>
-            /// Send ^BRK
-            /// </summary>
-            CTRL_BREAK = 1,
-            
-            /// <summary>
-            /// Application close
-            /// </summary>
-            CTRL_CLOSE = 2,
-
-            /// <summary>
-            /// User log-off
-            /// </summary>
-            CTRL_LOGOFF = 5,
-
-            /// <summary>
-            /// Shutdown initiated
-            /// </summary>
-            CTRL_SHUTDOWN = 6
-        }
+        static extern bool GenerateConsoleCtrlEvent(ConsoleControlSignal sigevent, int dwProcessGroupId);       
 
         //set up the parents CtrlC event handler, so we can ignore the event while sending to the child
         static volatile bool SENDING_CTRL_C_TO_CHILD = false;

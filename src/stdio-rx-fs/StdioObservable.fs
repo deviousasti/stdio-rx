@@ -1,6 +1,6 @@
 ﻿namespace FSharp.Control.Reactive 
 
-module Stdio =
+module StdioObservable =
 
     open System
     open System.IO
@@ -29,7 +29,7 @@ module Stdio =
             | SendQuitCommand   of command:string
   
          /// Settings for creating an stdio-bound Observable
-         type ShellSettings =    
+         type StreamSettings =    
              {
                    /// Input to stdin
                    Input: IObservable<string>
@@ -89,14 +89,14 @@ module Stdio =
         | _ when proc.HasExited         -> ()
         | Options.InputClose            -> proc.StandardInput.Close()
         | Options.Close                 -> proc.Close()
-        | Options.Kill                  -> proc.Kill()
+        | Options.Kill                  -> proc.Kill(true)
         | Options.CloseMainWindow       -> proc.CloseMainWindow() |> ignore
         | Options.SendQuitCommand(c)    -> proc.StandardInput.Write(c)
         | _                             -> ()
     
     /// Listens to an existing process, sends notifications 
     /// through the observer
-    let listen (proc: Process) (settings:Options.ShellSettings) (observer : IObserver<string>) =
+    let listen (proc: Process) (settings:Options.StreamSettings) (observer : IObserver<string>) =
     
         let exit code =
             if settings.ExitCodes |> Array.contains code then
@@ -158,7 +158,7 @@ module Stdio =
             subscriptions |> Disposable.compose
     
     /// Starts a new process and begins redirection
-    let private run (args:ProcessStartInfo) (settings: Options.ShellSettings) (observer : IObserver<string>) =
+    let private run (args:ProcessStartInfo) (settings: Options.StreamSettings) (observer : IObserver<string>) =
         try
         let proc = Process.Start args
         let subscription = listen proc settings observer     
@@ -183,7 +183,7 @@ module Stdio =
         Disposable.empty
 
     /// Create an observable process with the supplied process info
-    let createWith (settings:Options.ShellSettings) (proc:ProcessStartInfo)  =
+    let createWith (settings:Options.StreamSettings) (proc:ProcessStartInfo)  =
         proc.RedirectStandardInput  <- settings.RedirectInput
         proc.RedirectStandardOutput <- settings.RedirectOutput
         proc.RedirectStandardError  <- settings.RedirectError    

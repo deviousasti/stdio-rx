@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>FSharp.Control.Reactive.Stdio</name></assembly>
+<members>
+<member name="M:FSharp.Control.Reactive.Subject.empty2``2">
+<summary>
+ Create a unit Subject&lt;TSource, TResult&gt; which does no work
+</summary>
+</member>
+<member name="M:FSharp.Control.Reactive.Subject.empty``1">
+<summary>
+ Create a unit Subject&lt;T&gt; which does no work
+</summary>
+</member>
+<member name="P:FSharp.Control.Reactive.Disposable.empty">
+<summary>
+ Create an empty disposable
+</summary>
+</member>
+<member name="M:FSharp.Control.Reactive.Observable.ignoreElements``1(System.IObservable{``0})">
+<summary>
+ Ignore elements of a sequence
+</summary>
+</member>
+<member name="M:FSharp.Control.Reactive.Observable.subcribeLog``1(System.IObservable{``0})">
+<summary>
+ Log to console for debugging
+</summary>
+</member>
+<member name="M:FSharp.Control.Reactive.Observable.createWithDisposable``1(Microsoft.FSharp.Core.FSharpFunc{System.IObserver{``0},System.IDisposable})">
+<summary>
+ Creates an observable sequence from a specified Subscribe method implementation.
+</summary>
+</member>
+<member name="M:FSharp.Control.Reactive.StdioObservable.where(System.String)">
+<summary>
+ The equivalent of the where/which command which finds the directory 
+ an executable is in from the system&apos;s PATH environment variable
+</summary>
+</member>
+<member name="M:FSharp.Control.Reactive.StdioObservable.create(FSharp.Control.Reactive.StdioObservable.Options.StreamSettings,System.String,System.String)">
+<summary>
+ Create an observable process with the supplied process file name, and arguments
+</summary>
+</member>
+<member name="M:FSharp.Control.Reactive.StdioObservable.createWith(FSharp.Control.Reactive.StdioObservable.Options.StreamSettings,System.Diagnostics.ProcessStartInfo)">
+<summary>
+ Create an observable process with the supplied process info
+</summary>
+</member>
+<member name="M:FSharp.Control.Reactive.StdioObservable.run(System.Diagnostics.ProcessStartInfo,FSharp.Control.Reactive.StdioObservable.Options.StreamSettings,System.IObserver{System.String})">
+<summary>
+ Starts a new process and begins redirection
+</summary>
+</member>
+<member name="M:FSharp.Control.Reactive.StdioObservable.listen(System.Diagnostics.Process,FSharp.Control.Reactive.StdioObservable.Options.StreamSettings,System.IObserver{System.String})">
+<summary>
+ Listens to an existing process, sends notifications 
+ through the observer
+</summary>
+</member>
+<member name="M:FSharp.Control.Reactive.StdioObservable.kill(System.Diagnostics.Process,FSharp.Control.Reactive.StdioObservable.Options.ExitMethod)">
+<summary>
+ Kills a process
+</summary>
+</member>
+<member name="T:FSharp.Control.Reactive.StdioObservable.ProcessTerminatedException">
+<summary>
+ Raised when the process has terminated with
+ an unexpected error code
+</summary>
+</member>
+<member name="P:FSharp.Control.Reactive.StdioObservable.Options.StreamSettings.EnvironmentVariables">
+<summary>
+ List of environment variables to set
+ for the process
+</summary>
+</member>
+<member name="P:FSharp.Control.Reactive.StdioObservable.Options.StreamSettings.ExitDelay">
+<summary>
+ Gets or sets the process exit timeout.
+</summary>
+</member>
+<member name="P:FSharp.Control.Reactive.StdioObservable.Options.StreamSettings.ExitCodes">
+<summary>
+ Array of successful exit codes.
+</summary>
+</member>
+<member name="P:FSharp.Control.Reactive.StdioObservable.Options.StreamSettings.WorkingDirectory">
+<summary>
+ Gets or sets the working directory of the called process.
+</summary>
+</member>
+<member name="P:FSharp.Control.Reactive.StdioObservable.Options.StreamSettings.ExitMethod">
+<summary>
+ Sets the exit method of the process.
+</summary>
+</member>
+<member name="P:FSharp.Control.Reactive.StdioObservable.Options.StreamSettings.RedirectError">
+<summary>
+ Should force redirect stderr - defaults to true
+</summary>
+</member>
+<member name="P:FSharp.Control.Reactive.StdioObservable.Options.StreamSettings.RedirectOutput">
+<summary>
+ Should force redirect stderr - defaults to true
+</summary>
+</member>
+<member name="P:FSharp.Control.Reactive.StdioObservable.Options.StreamSettings.RedirectInput">
+<summary>
+ Should force redirect stdout - defaults to true
+</summary>
+</member>
+<member name="P:FSharp.Control.Reactive.StdioObservable.Options.StreamSettings.WriteNewLines">
+<summary>
+ Should every line end with a newline
+</summary>
+</member>
+<member name="P:FSharp.Control.Reactive.StdioObservable.Options.StreamSettings.Input">
+<summary>
+ Input to stdin
+</summary>
+</member>
+<member name="T:FSharp.Control.Reactive.StdioObservable.Options.StreamSettings">
+<summary>
+ Settings for creating an stdio-bound Observable
+</summary>
+</member>
+<member name="T:FSharp.Control.Reactive.StdioObservable.Options.ExitMethod.SendQuitCommand">
+<summary>
+ Send explicit quit command via stdin
+</summary>
+</member>
+<member name="T:FSharp.Control.Reactive.StdioObservable.Options.ExitMethod.SendControlSignal">
+<summary>
+ Send control signal 
+</summary>
+</member>
+<member name="T:FSharp.Control.Reactive.StdioObservable.Options.ExitMethod.Kill">
+<summary>
+ Kill the process
+</summary>
+</member>
+<member name="T:FSharp.Control.Reactive.StdioObservable.Options.ExitMethod.CloseMainWindow">
+<summary>
+ If GUI application, close the main window
+</summary>
+</member>
+<member name="T:FSharp.Control.Reactive.StdioObservable.Options.ExitMethod.Close">
+<summary>
+ Send close message
+</summary>
+</member>
+<member name="T:FSharp.Control.Reactive.StdioObservable.Options.ExitMethod.InputClose">
+<summary>
+ Close stdin stream            
+</summary>
+</member>
+<member name="P:FSharp.Control.Reactive.StdioObservable.Options.defaultSettings">
+<summary>
+ Default settings for the process
+</summary>
+</member>
+</members>
+</doc>
