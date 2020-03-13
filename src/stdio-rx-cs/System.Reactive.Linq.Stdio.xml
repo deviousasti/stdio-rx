@@ -128,7 +128,7 @@
         </member>
         <member name="P:System.Reactive.Linq.Stdio.StdioSettings.ExitMethod">
             <summary>
-            Sets the exit method of the process.
+            Sets the exit method of the process - default is Kill.
             </summary>
         </member>
         <member name="P:System.Reactive.Linq.Stdio.StdioSettings.ExitTimeout">
@@ -153,9 +153,9 @@
               <c>true</c> if [kill other processes]; otherwise, <c>false</c>.
             </value>
         </member>
-        <member name="P:System.Reactive.Linq.Stdio.StdioSettings.RootPath">
+        <member name="P:System.Reactive.Linq.Stdio.StdioSettings.UseExecutablePath">
             <summary>
-            Gets or sets a value indicating whether to use the root executable path
+            Gets or sets a value indicating whether to use the executable path as the working directory
             </summary>
             <value>
               <c>true</c> if [root path]; otherwise, <c>false</c>.

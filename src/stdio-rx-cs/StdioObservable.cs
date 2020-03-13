@@ -142,7 +142,7 @@ namespace System.Reactive.Linq.Stdio
         public bool RedirectError { get; set; }
 
         /// <summary>
-        /// Sets the exit method of the process.
+        /// Sets the exit method of the process - default is Kill.
         /// </summary>
         public ProcessExitMethod ExitMethod { get; set; }
 
@@ -171,12 +171,12 @@ namespace System.Reactive.Linq.Stdio
         public bool KillOtherProcesses { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to use the root executable path
+        /// Gets or sets a value indicating whether to use the executable path as the working directory
         /// </summary>
         /// <value>
         ///   <c>true</c> if [root path]; otherwise, <c>false</c>.
         /// </value>
-        public bool RootPath { get; set; }
+        public bool UseExecutablePath { get; set; }
 
         /// <summary>
         /// Gets or sets the working directory of the called process.
@@ -244,14 +244,14 @@ namespace System.Reactive.Linq.Stdio
         {
             settings = settings ?? StdioSettings.Defaults;
 
-            proc.RedirectStandardInput = true; //this is neccessary
+            proc.RedirectStandardInput = true; 
             proc.RedirectStandardOutput = settings.RedirectOutput;
             proc.RedirectStandardError = settings.RedirectError;
-            proc.UseShellExecute = false;
+            proc.UseShellExecute = false; //this is neccessary
 
             if (!string.IsNullOrEmpty(settings.WorkingDirectory))
                 proc.WorkingDirectory = settings.WorkingDirectory;
-            else if (settings.RootPath)
+            else if (settings.UseExecutablePath)
                 proc.WorkingDirectory = Path.GetDirectoryName(proc.FileName);
 
 

@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>FSharp.Control.Reactive.Stdio.XML</DocumentationFile>
+    <DocumentationFile>FSharp.Control.Reactive.Stdio.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

@@ -29,7 +29,7 @@ module StdioObservable =
             | SendQuitCommand   of command:string
   
          /// Settings for creating an stdio-bound Observable
-         type StreamSettings =    
+         type StdioSettings =    
              {
                    /// Input to stdin
                    Input: IObservable<string>
@@ -64,7 +64,7 @@ module StdioObservable =
             }
 
         /// Default settings for the process
-        let defaultSettings = 
+        let defaults = 
             { 
                 Input = Observable.empty; 
                 WriteNewLines = true; 
@@ -96,7 +96,7 @@ module StdioObservable =
     
     /// Listens to an existing process, sends notifications 
     /// through the observer
-    let listen (proc: Process) (settings:Options.StreamSettings) (observer : IObserver<string>) =
+    let listen (proc: Process) (settings:Options.StdioSettings) (observer : IObserver<string>) =
     
         let exit code =
             if settings.ExitCodes |> Array.contains code then
@@ -158,7 +158,7 @@ module StdioObservable =
             subscriptions |> Disposable.compose
     
     /// Starts a new process and begins redirection
-    let private run (args:ProcessStartInfo) (settings: Options.StreamSettings) (observer : IObserver<string>) =
+    let private run (args:ProcessStartInfo) (settings: Options.StdioSettings) (observer : IObserver<string>) =
         try
         let proc = Process.Start args
         let subscription = listen proc settings observer     
@@ -183,7 +183,7 @@ module StdioObservable =
         Disposable.empty
 
     /// Create an observable process with the supplied process info
-    let createWith (settings:Options.StreamSettings) (proc:ProcessStartInfo)  =
+    let createWith (settings:Options.StdioSettings) (proc:ProcessStartInfo)  =
         proc.RedirectStandardInput  <- settings.RedirectInput
         proc.RedirectStandardOutput <- settings.RedirectOutput
         proc.RedirectStandardError  <- settings.RedirectError    
@@ -203,6 +203,8 @@ module StdioObservable =
 
     let private combine file path =
         Path.Combine (path, file)
+    let settings =
+        { Options.defaults with ExitCodes = [| 0; 200 |]; ExitMethod = Options.SendQuitCommand("q") }
     
     /// The equivalent of the where/which command which finds the directory 
     /// an executable is in from the system's PATH environment variable
